@@ -8,12 +8,14 @@ import {
 import Products from './pages/Products';
 import Books from './pages/Books';
 import Home from './pages/Home';
+import Navigation from './Navigation';
 
 function App() {
   return (
     <>
       <Router>
         {/* <Navigation /> */}
+        <Navigation />
         <Switch>
           <Route path="/books">
             <Books />
