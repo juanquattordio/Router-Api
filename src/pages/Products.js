@@ -18,7 +18,7 @@ function Products(props) {
 
     return (
         <div>
-            {apiProducts.map((product, index) => <Product key={index} product={product}></Product>)}
+            {apiProducts.map((product, index) => <Product key={index} index={index} product={product}></Product>)}
 
         </div>
     )
