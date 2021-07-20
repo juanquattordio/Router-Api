@@ -11,7 +11,7 @@ import Home from './pages/Home';
 import Navigation from './Navigation';
 import { useState, useEffect } from "react"
 import axios from "axios";
-
+import { Row, Alert, Col, Container, } from "react-bootstrap"
 
 function App() {
 
