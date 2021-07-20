@@ -3,14 +3,18 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  // Link
 } from "react-router-dom";
 import Products from './pages/Products';
 import Books from './pages/Books';
 import Home from './pages/Home';
 import Navigation from './Navigation';
+import { useState, useEffect } from "react"
+import axios from "axios";
+
 
 function App() {
+
   return (
     <>
       <Router>

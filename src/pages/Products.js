@@ -1,29 +1,25 @@
 import { useState, useEffect } from "react"
+import axios from "axios";
+import Product from "../components/Product";
 
-function Products() {
-    let [apiProducts, setApiProducts] = useState("");
+function Products(props) {
+    let [apiProducts, setApiProducts] = useState([]);
 
     useEffect(() => {
-        let axios = require("axios");
-        let productsApi = axios("https://fakerapi.it/api/v1/products?")
-            .then(res => {
-                console.log("OK")
-                setApiProducts(res.data)
-            })
-            .catch(err => {	// catch siempre recibe un error, por si falla la API.
-                console.log("Mensaje Error:")
-                console.log(err.response.statusText)
-            })
-        console.log(apiProducts)
+        leerApi();
     }, [])
 
-    let listProducts = apiProducts.data;
+    const leerApi = async () => {
+        const datos = await fetch("https://fakerapi.it/api/v1/products?")
+        const productList = await datos.json()
+        console.log(productList.data)
+        setApiProducts(productList.data)
+    };
 
-    console.log(listProducts)
     return (
         <div>
-            <h1>{apiProducts.code}</h1>
-            {listProducts.map((prod) => <p>{prod.name}</p>)}
+            {apiProducts.map((product, index) => <Product key={index} product={product}></Product>)}
+
         </div>
     )
 }
