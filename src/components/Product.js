@@ -8,11 +8,11 @@ function Product(props) {
     // const index = props.index;
     return (
         <div>
-            <Row>
-                <p>El nombre es: {product.name}</p>
+            <Row className="justify-content-center container mt-4 d-flex">
+                <Card.Title>{product.name}</Card.Title>
                 {product.images.map((image, index) =>
-                    <Card key={index} style={{ width: '18rem' }}>
-                        <Card.Img variant="top" src={image.url} fluid />
+                    <Card bg="light" text="dark" key={index} style={{ width: '18rem', margin: "0.1rem" }}>
+                        <Card.Img variant="top" src={image.url} fluid className="mt-2" />
                         <Card.Body>
                             <Card.Title>{image.title}</Card.Title>
                             <Card.Text>
@@ -21,11 +21,6 @@ function Product(props) {
 
                         </Card.Body>
                     </Card>
-                    // <Col key={index} className="col-4">
-                    //     <Image src={image.url} fluid />
-                    //     <p>{image.title}</p>
-                    //     <p>{image.description}</p>
-                    // </Col>
                 )}
             </Row>
 
