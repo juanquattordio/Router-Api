@@ -14,18 +14,30 @@ import axios from "axios";
 import { Row, Alert, Col, Container, } from "react-bootstrap"
 
 function App() {
+  let [apiProducts, setApiProducts] = useState([]);
+
+  const leerApiProducts = async () => {
+    const datos = await fetch(`https://fakerapi.it/api/v1/products?_locale=en_EN&_seed=12456`)
+    const productList = await datos.json()
+    console.log(productList.data)
+    setApiProducts(productList.data)
+  };
+
+  useEffect(() => {
+    leerApiProducts();
+  }, [])
+
 
   return (
     <>
       <Router>
-        {/* <Navigation /> */}
         <Navigation />
         <Switch>
           <Route path="/books">
             <Books />
           </Route>
           <Route path="/products">
-            <Products />
+            <Products apiResult={apiProducts} />
           </Route>
           <Route path="/">
             {/* // cuando accedo a raiz, aparece un componente que dice Bienvenido */}
