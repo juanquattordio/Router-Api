@@ -6,7 +6,6 @@ import { Button } from "react-bootstrap";
 function Products(props) {
 
     let pageSize = 3;
-    let sizeProductList;
 
     let [apiProducts, setApiProducts] = useState([]);
     let [apiProductsPartial, setApiProductsPartial] = useState([]);
@@ -22,7 +21,7 @@ function Products(props) {
                 console.log(productList.data)
                 let productListPartial = productList.data;
                 console.log("Initial: " + initial + " Limit: " + limit)
-                productListPartial = productListPartial.slice(initial, limit) // esta es la línea que quiero ejecutar desupés del fetch. Estoy buscando cómo trabajar ocn fetch o axios.
+                productListPartial = productListPartial.slice(initial, limit)
                 console.log(productListPartial)
                 setApiProductsPartial(productListPartial)
             })
@@ -59,7 +58,7 @@ function Products(props) {
         <div className="container ">
             {apiProductsPartial.map((product, index) => <Product key={index} index={index} product={product}></Product>)}
 
-            <div className="Navigation">
+            <div className="Pagination">
                 <Button variant="primary" onClick={previousPage}>previous page</Button>
                 <span>page {currentPage} of {cantidadPaginas}</span>
                 <Button variant="primary" onClick={nextPage} >next page</Button>
