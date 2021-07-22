@@ -12,7 +12,7 @@ function Product(props) {
                 <Card.Title>{product.name}</Card.Title>
                 {product.images.map((image, index) =>
                     <Card bg="light" text="dark" key={index} style={{ width: '18rem', margin: "0.1rem" }}>
-                        <Card.Img variant="top" src={image.url} fluid className="mt-2" />
+                        <Card.Img variant="top" src={image.url} className="mt-2" />
                         <Card.Body>
                             <Card.Title>{image.title}</Card.Title>
                             <Card.Text>

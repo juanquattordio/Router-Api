@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react"
 import axios from "axios";
 import Product from "../components/Product";
+import { Button } from "react-bootstrap";
 
 function Products(props) {
 
     let pageSize = 3;
+    let sizeProductList;
+
     let [apiProducts, setApiProducts] = useState([]);
     let [apiProductsPartial, setApiProductsPartial] = useState([]);
     const [limit, setLimit] = useState(pageSize); // defino que tenga 3 productos por pagina
     const [initial, setInitial] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-
 
     const leerApi = async () => {
         axios.get(`https://fakerapi.it/api/v1/products?_locale=en_EN&_seed=12456`)
@@ -18,10 +20,8 @@ function Products(props) {
                 const productList = res.data;
                 setApiProducts(productList.data);
                 console.log(productList.data)
-                //cantidadPaginas = Math.ceil(productList.total / limit)
-                // console.log("cantidadPaginas: " + cantidadPaginas)
                 let productListPartial = productList.data;
-                // if (currentPage < (cantidadPaginas))
+                console.log("Initial: " + initial + " Limit: " + limit)
                 productListPartial = productListPartial.slice(initial, limit) // esta es la línea que quiero ejecutar desupés del fetch. Estoy buscando cómo trabajar ocn fetch o axios.
                 console.log(productListPartial)
                 setApiProductsPartial(productListPartial)
@@ -35,35 +35,35 @@ function Products(props) {
         leerApi();
     }, [initial, limit])
 
-    // Probando con props, recibe bien la props pero creo que sigue el problema de async
-    // useEffect(() => {
-    //     console.log("Se vuelve a leer api")
-    //     console.log("initial: " + initial)
-    //     console.log("Limit: " + limit)
-    //     console.log("Lista parcial ")
-    //     setApiProductsPartial(props.apiResult.slice(initial, limit))
-    // }, [initial, limit])
-
     const nextPage = () => {
-        if ((cantidadPaginas - currentPage) > 0) {
-            setInitial(initial + limit)
-            setLimit(limit + limit)
+        if (cantidadPaginas > currentPage) {
+            let newInitial = initial + pageSize
+            setInitial(newInitial)
+            setLimit(newInitial + pageSize)
             setCurrentPage(currentPage + 1)
-        } else return
+        } else {
+            setInitial(limit)
+            setLimit(apiProducts.length)
+        }
     }
-
     const previousPage = () => {
-        alert("previous")
-        if ({ currentPage } > 1) {
-            setInitial(initial - limit)
+        if (currentPage > 1) {
+            setLimit(initial)
+            let newInitial = initial - pageSize
+            setInitial(newInitial)
+            setCurrentPage(currentPage - 1)
         } else return
     }
 
     return (
-        <div className="container">
+        <div className="container ">
             {apiProductsPartial.map((product, index) => <Product key={index} index={index} product={product}></Product>)}
-            <div onClick={previousPage}> Previous Page </div>
-            <div onClick={nextPage}> Next Page </div>
+
+            <div className="Navigation">
+                <Button variant="primary" onClick={previousPage}>previous page</Button>
+                <span>page {currentPage} of {cantidadPaginas}</span>
+                <Button variant="primary" onClick={nextPage} >next page</Button>
+            </div>
         </div>
 
     )
